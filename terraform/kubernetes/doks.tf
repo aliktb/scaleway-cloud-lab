@@ -2,7 +2,7 @@ resource "digitalocean_kubernetes_cluster" "myfirstcluster" {
   name   = "myfirstcluster"
   region = "lon1"
   # Grab the latest version slug from `doctl kubernetes options versions`
-  version = "1.27.4-do.0"
+  version = "1.28.2-do.0"
 
   vpc_uuid = digitalocean_vpc.k8s.id
 
