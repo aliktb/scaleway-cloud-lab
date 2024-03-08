@@ -3,11 +3,13 @@
 To perform terraform scripts, run:
 
 ```bash
-terraform destroy -var-file="dev.tfvars"
+tofu apply
+
+tofu output -json kubeconfig | yq -P '.config_file' > ~/.kube/scw.yaml
 ```
 
 To tear down cluster, run:
 
 ```bash
-terraform destroy -var-file="dev.tfvars"
+tofu destroy -var-file="dev.tfvars"
 ```
