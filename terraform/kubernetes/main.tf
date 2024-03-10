@@ -1,3 +1,21 @@
+terraform {
+  required_providers {
+
+    ## Scaleway Provider
+    scaleway = {
+      source = "scaleway/scaleway"
+    }
+  }
+
+  required_version = ">= 0.13"
+}
+
+provider "scaleway" {
+  alias   = "p2"
+  profile = "myProfile"
+}
+
+
 resource "scaleway_vpc_private_network" "hedy" {
   provider = scaleway.p2
 }
@@ -21,13 +39,10 @@ resource "scaleway_k8s_pool" "john" {
   size       = 1
 }
 
-data "scaleway_k8s_cluster" "my_key" {
-  provider = scaleway.p2
-  name  = "jack"
-}
 
 output "kubeconfig" {
   description = "Name of my cluster"
-  value       = data.scaleway_k8s_cluster.my_key.kubeconfig[0]
+  value       = scaleway_k8s_cluster.jack.kubeconfig[0]
+
   sensitive = true
 }
