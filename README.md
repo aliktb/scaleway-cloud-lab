@@ -1,1 +1,1 @@
-# digitalocean-cloud-lab
+# scaleway-cloud-lab
