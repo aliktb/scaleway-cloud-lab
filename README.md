@@ -1,1 +1,1 @@
-# scaleway-cloud-lab
+# vultr-cloud-lab

@@ -1,48 +1,37 @@
 terraform {
   required_providers {
-
-    ## Scaleway Provider
-    scaleway = {
-      source = "scaleway/scaleway"
+    vultr = {
+      source = "vultr/vultr"
+      version = "2.19.0"
     }
   }
-
-  required_version = ">= 0.13"
 }
 
-provider "scaleway" {
-  alias   = "p2"
-  profile = "myProfile"
+# Configure the Vultr Provider
+provider "vultr" {
+  api_key = var.vultr_api_token
+  rate_limit = 100
+  retry_limit = 3
 }
 
 
-resource "scaleway_vpc_private_network" "hedy" {
-  provider = scaleway.p2
-}
 
-resource "scaleway_k8s_cluster" "jack" {
-  provider = scaleway.p2
+resource "vultr_kubernetes" "k8" {
+    region  = "ewr"
+    label   = "vke-test"
+    version = "v1.29.2+1"
 
-  name    = "jack"
-  version = "1.29.1"
-  cni     = "cilium"
-  private_network_id = scaleway_vpc_private_network.hedy.id
-  delete_additional_resources = false
-}
-
-resource "scaleway_k8s_pool" "john" {
-  provider = scaleway.p2
-
-  cluster_id = scaleway_k8s_cluster.jack.id
-  name       = "john"
-  node_type  = "DEV1-M"
-  size       = 1
+    node_pools {
+        node_quantity = 1
+        plan          = "vc2-1c-2gb"
+        label         = "vke-nodepool"
+        auto_scaler   = false
+    }
 }
 
 
 output "kubeconfig" {
   description = "Name of my cluster"
-  value       = scaleway_k8s_cluster.jack.kubeconfig[0]
-
+  value       = vultr_kubernetes.k8.kube_config
   sensitive = true
 }
