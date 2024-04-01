@@ -24,7 +24,7 @@ provider "github" {
 
 provider "flux" {
   kubernetes = {
-    config_path = "~/.kube/vultr.yaml"
+    config_path = "~/.kube/scw.yaml"
   }
   git = {
     url = "ssh://git@github.com/${var.github_org}/${var.github_repository}.git"
