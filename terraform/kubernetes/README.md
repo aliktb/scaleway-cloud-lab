@@ -1,6 +1,6 @@
 # Terraform instructions
 
-To perform terraform scripts, run:
+Ensure that `~/.config/scw/config.yaml` exists with the necessary values. To perform terraform (OpenTofu) scripts, run:
 
 ```bash
 tofu apply
